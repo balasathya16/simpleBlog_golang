@@ -4,10 +4,17 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"simpleBlog/pkg/routes"
+
+	"github.com/gorilla/mux"
 )
 
 func main() {
 	fmt.Println("Starting the Simple Blog")
+
+	router := mux.NewRouter()
+	routes.ConfigureRoutes(router)
 
 	// server configurations and routes
 

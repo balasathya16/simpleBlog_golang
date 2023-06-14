@@ -9,7 +9,7 @@ import (
 func main() {
 	fmt.Println("Starting the Simple Blog")
 
-	// Define the server configurations and routes
+	// server configurations and routes
 
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {

@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -8,6 +9,9 @@ import (
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	// Logic to handle the home page request
+	w.Header().Set("Content-Type", "text/plain")
+
+	fmt.Fprint(w, "Welcome to the home page!")
 }
 
 func PostHandler(w http.ResponseWriter, r *http.Request) {

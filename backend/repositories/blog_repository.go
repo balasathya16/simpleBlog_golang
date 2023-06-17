@@ -9,7 +9,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
-	"simpleBlog_golang/backend/models"
+	"simpleBlog/backend/config"
+	"simpleBlog/backend/models"
 )
 
 type BlogRepository struct {

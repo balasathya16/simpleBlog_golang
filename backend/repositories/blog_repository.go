@@ -18,12 +18,12 @@ type BlogRepository struct {
 }
 
 func NewBlogRepository() *BlogRepository {
-	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(config.DatabaseConfig.ConnectionString))
+	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(config.GetMongoDBURI()))
 	if err != nil {
 		panic(err)
 	}
 
-	database := client.Database(config.DatabaseConfig.DatabaseName)
+	database := client.Database(config.GetDatabaseName())
 	collection := database.Collection("blogs")
 
 	return &BlogRepository{

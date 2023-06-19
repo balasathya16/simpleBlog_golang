@@ -1,6 +1,12 @@
 package config
 
-import "os"
+import (
+	"log"
+	"os"
+	"path/filepath"
+
+	"github.com/joho/godotenv"
+)
 
 // Config represents the application configuration settings.
 type Config struct {
@@ -28,6 +34,19 @@ func getEnv(key, defaultValue string) string {
 }
 
 // GetMongoDBURI returns the MongoDB URI from the application configuration.
+func init() {
+	dir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println("Current working directory:", dir)
+
+	err = godotenv.Load(filepath.Join(dir, ".env"))
+	if err != nil {
+		log.Fatal("Error loading .env file:", err)
+	}
+}
+
 func GetMongoDBURI() string {
 	return os.Getenv("MONGODB_URI")
 }

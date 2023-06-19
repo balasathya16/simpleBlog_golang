@@ -29,7 +29,7 @@ func getEnv(key, defaultValue string) string {
 
 // GetMongoDBURI returns the MongoDB URI from the application configuration.
 func GetMongoDBURI() string {
-	return appConfig.MongoDBURI
+	return os.Getenv("MONGODB_URI")
 }
 
 // GetDatabaseName returns the database name from the application configuration.

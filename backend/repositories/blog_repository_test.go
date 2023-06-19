@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"simpleBlog/backend/models"
 )
@@ -13,7 +14,11 @@ import (
 func TestBlogRepository_Create(t *testing.T) {
 	repo := NewBlogRepository()
 
+	// Generate a new ObjectID
+	id := primitive.NewObjectID()
+
 	blog := &models.Blog{
+		ID:      id,
 		Title:   "My First Blog Post",
 		Content: "Hello, world!",
 		Author:  "John Doe",

@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -18,7 +19,10 @@ type BlogRepository struct {
 }
 
 func NewBlogRepository() *BlogRepository {
-	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(config.GetMongoDBURI()))
+	uri := config.GetMongoDBURI()
+	log.Println("MongoDB URI:", uri)
+
+	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))
 	if err != nil {
 		panic(err)
 	}

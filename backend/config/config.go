@@ -53,7 +53,7 @@ func GetMongoDBURI() string {
 
 // GetDatabaseName returns the database name from the application configuration.
 func GetDatabaseName() string {
-	return appConfig.DatabaseName
+	return os.Getenv("DATABASE_NAME")
 }
 
 // GetServerAddress returns the server address from the application configuration.

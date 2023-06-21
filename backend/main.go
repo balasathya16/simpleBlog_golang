@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -15,7 +14,7 @@ func main() {
 	cfg := config.LoadConfig()
 
 	// Create a new instance of the BlogRepository
-	repo := repositories.NewBlogRepository(cfg.MongoDBURI, cfg.DatabaseName)
+	repo := repositories.NewBlogRepository()
 
 	// Create a new router using Gorilla Mux
 	router := mux.NewRouter()
@@ -28,9 +27,9 @@ func main() {
 	router.HandleFunc("/blogs/{id}", DeleteBlog(repo)).Methods("DELETE")
 
 	// Start the HTTP server
-	addr := fmt.Sprintf("%s%s", cfg.ServerAddress, router)
+	addr := cfg.ServerAddress
 	log.Printf("Server listening on %s", addr)
-	log.Fatal(http.ListenAndServe(cfg.ServerAddress, router))
+	log.Fatal(http.ListenAndServe(addr, router))
 }
 
 func GetBlogs(repo *repositories.BlogRepository) http.HandlerFunc {

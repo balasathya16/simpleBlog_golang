@@ -43,6 +43,40 @@ func (r *BlogRepository) Create(blog *models.Blog) error {
 	return err
 }
 
+// get all blogs
+
+func (r *BlogRepository) GetAll() ([]*models.Blog, error) {
+	filter := bson.M{} // Empty filter to retrieve all blogs
+
+	// Define options for sorting or pagination if needed
+	options := options.Find()
+
+	// Execute the query and retrieve the blogs
+	cur, err := r.collection.Find(context.TODO(), filter, options)
+	if err != nil {
+		return nil, err
+	}
+	defer cur.Close(context.TODO())
+
+	var blogs []*models.Blog
+
+	// Iterate over the query results and decode each blog
+	for cur.Next(context.TODO()) {
+		var blog models.Blog
+		err := cur.Decode(&blog)
+		if err != nil {
+			return nil, err
+		}
+		blogs = append(blogs, &blog)
+	}
+
+	if err := cur.Err(); err != nil {
+		return nil, err
+	}
+
+	return blogs, nil
+}
+
 func (r *BlogRepository) GetByID(id string) (*models.Blog, error) {
 	objID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {

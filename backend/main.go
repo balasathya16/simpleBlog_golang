@@ -9,6 +9,7 @@ import (
 	"simpleBlog/backend/config"
 	"simpleBlog/backend/controllers"
 	"simpleBlog/backend/repositories"
+	"simpleBlog/backend/routes"
 )
 
 func main() {
@@ -23,12 +24,8 @@ func main() {
 	// Create a new router using Gorilla Mux
 	router := mux.NewRouter()
 
-	// Define the routes and their corresponding handlers
-	router.HandleFunc("/blogs", controller.GetBlogs).Methods("GET")
-	router.HandleFunc("/blogs/{id}", controller.GetBlogByID).Methods("GET")
-	router.HandleFunc("/blogs", controller.CreateBlog).Methods("POST")
-	router.HandleFunc("/blogs/{id}", controller.UpdateBlog).Methods("PUT")
-	router.HandleFunc("/blogs/{id}", controller.DeleteBlog).Methods("DELETE")
+	// Register the blog routes
+	routes.RegisterBlogRoutes(router, controller)
 
 	// Start the HTTP server
 	addr := cfg.ServerAddress

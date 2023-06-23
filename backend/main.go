@@ -10,6 +10,8 @@ import (
 	"simpleBlog/backend/controllers"
 	"simpleBlog/backend/repositories"
 	"simpleBlog/backend/routes"
+
+	"github.com/gorilla/handlers"
 )
 
 func main() {
@@ -27,8 +29,16 @@ func main() {
 	// Register the blog routes
 	routes.RegisterBlogRoutes(router, controller)
 
+	// Apply CORS middleware
+	cors := handlers.CORS(
+		handlers.AllowedOrigins([]string{"http://localhost:3000"}), // Add the origin of your frontend application
+		handlers.AllowCredentials(),
+		handlers.AllowedHeaders([]string{"Content-Type"}),
+	)
+	c := cors(router)
+
 	// Start the HTTP server
 	addr := cfg.ServerAddress
 	log.Printf("Server listening on %s", addr)
-	log.Fatal(http.ListenAndServe(addr, router))
+	log.Fatal(http.ListenAndServe(addr, c))
 }

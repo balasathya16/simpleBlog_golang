@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import API_BASE_URL from './config';
 
 function App() {
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    axios.get(`${API_BASE_URL}/blogs`)
+      .then(response => {
+        setBlogs(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Blogs:</h1>
+      {blogs.map(blog => (
+        <div key={blog.ID}>
+          <h3>{blog.Title}</h3>
+          <p>{blog.Content}</p>
+          <p>Author: {blog.Author}</p>
+          {/* Add additional blog details as needed */}
+        </div>
+      ))}
     </div>
   );
 }

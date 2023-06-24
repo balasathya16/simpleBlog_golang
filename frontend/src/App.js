@@ -23,6 +23,8 @@ function App() {
           <h3>{blog.Title}</h3>
           <p>{blog.Content}</p>
           <p>Author: {blog.Author}</p>
+          <p>Updated: {blog.UpdatedAt}</p>
+
           {/* Add additional blog details as needed */}
         </div>
       ))}
